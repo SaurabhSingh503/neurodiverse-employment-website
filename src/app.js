@@ -1,20 +1,25 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv');
-
-dotenv.config();
-
+const path = require('path');
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Serve static files from the "public" folder
+app.use(express.static(path.join(__dirname, '../public')));
 
-// Routes
-app.get('/', (req, res) => {
-  res.send('Welcome to the Neurodiverse Employment Website!');
+// Serve HTML files from the "views" folder
+app.get('/home', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/home.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/login.html'));
+});
+
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/signup.html'));
+});
+
+app.get('/dashboard', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/dashboard.html'));
 });
 
 // Start server
